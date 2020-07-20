@@ -19,13 +19,14 @@ export const MicroFrontend: React.FC<{
   host: string;
   name: string;
 }> = ({ history, host, name }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const scriptId = `micro-frontend-script-${name}`;
+  const [isLoading, setIsLoading] = useState(
+    !document.querySelector(`[data-id="${scriptId}"]`)
+  );
 
   useEffect(() => {
-    const scriptId = `micro-frontend-script-${name}`;
     const render = () => {
       const renderMethodName = `render${name}`;
-      console.log({ renderMethodName });
       (window as any)[renderMethodName](`${name}-container`, history);
       setIsLoading(false);
     };
