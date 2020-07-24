@@ -182,6 +182,7 @@ module.exports = {
       },
       shared: {
         react: { singleton: true },
+        'react-router-dom': { singleton: true },
       },
     }),
     // cleans output folder for production builds (which are written to disk)

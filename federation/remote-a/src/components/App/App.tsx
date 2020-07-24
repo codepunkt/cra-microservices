@@ -16,7 +16,11 @@ const theme = createMuiTheme({
   },
 })
 
-const App: React.FC = () => {
+type AppProps = {
+  basePath: string
+}
+
+const App: React.FC<AppProps> = () => {
   return (
     <ThemeProvider theme={theme}>
       <Headline>Remote A</Headline>

@@ -180,7 +180,8 @@ module.exports = {
         remoteB: 'remoteB@http://localhost:3002/remoteEntry.js',
       },
       shared: {
-        react: { singleton: true, requiredVersion: '^16.3.1' },
+        react: { singleton: true },
+        'react-router-dom': { singleton: true },
       },
     }),
     // cleans output folder for production builds (which are written to disk)

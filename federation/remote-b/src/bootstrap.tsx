@@ -2,11 +2,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App/App'
+import { BrowserRouter } from 'react-router-dom'
 
-// TODO: how to get history into App for nested routing?
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App basePath="" />
+    </BrowserRouter>
   </React.StrictMode>,
   document.querySelector('#app')
 )

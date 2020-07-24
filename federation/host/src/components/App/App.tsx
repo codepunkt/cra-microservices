@@ -42,7 +42,7 @@ const App: React.FC = () => {
               error={<div>Could not load remote A</div>}
               delayed={<div>Loading remote A...</div>}
             >
-              <RemoteA />
+              <RemoteA basePath="/a" />
             </FederatedWrapper>
           </Route>
           <Route path="/b">
@@ -50,7 +50,7 @@ const App: React.FC = () => {
               error={<div>Could not load remote B</div>}
               delayed={<div>Loading remote B...</div>}
             >
-              <RemoteB />
+              <RemoteB basePath="/b" />
             </FederatedWrapper>
           </Route>
         </Switch>
