@@ -178,7 +178,9 @@ module.exports = {
         remoteA: 'remoteA@http://localhost:3001/remoteEntry.js',
         remoteB: 'remoteB@http://localhost:3002/remoteEntry.js',
       },
-      shared: ['react', 'react-dom'],
+      shared: {
+        react: { singleton: true },
+      },
     }),
     // cleans output folder for production builds (which are written to disk)
     isProductionBuild && new CleanWebpackPlugin(),

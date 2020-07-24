@@ -179,7 +179,9 @@ module.exports = {
       exposes: {
         './App': './src/components/App/App',
       },
-      shared: ['react', 'react-dom'],
+      shared: {
+        react: { singleton: true },
+      },
     }),
     // cleans output folder for production builds (which are written to disk)
     isProductionBuild && new CleanWebpackPlugin(),
