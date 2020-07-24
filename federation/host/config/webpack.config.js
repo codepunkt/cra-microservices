@@ -27,7 +27,7 @@ module.exports = {
   mode: NODE_ENV !== undefined ? NODE_ENV : 'development',
   entry: [
     !isProductionBuild && '@webhotelier/webpack-fast-refresh/runtime.js',
-    resolveApp('src/index.tsx'),
+    resolveApp('src/index.ts'),
   ].filter(Boolean),
   output: {
     path: isProductionBuild ? resolveApp('dist') : undefined,
@@ -179,7 +179,7 @@ module.exports = {
         remoteB: 'remoteB@http://localhost:3002/remoteEntry.js',
       },
       shared: {
-        react: { singleton: true },
+        react: { singleton: true, requiredVersion: '^16.3.1' },
       },
     }),
     // cleans output folder for production builds (which are written to disk)

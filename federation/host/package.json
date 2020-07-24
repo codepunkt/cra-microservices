@@ -6,7 +6,7 @@
     "prebuild": "yarn run clean",
     "build": "NODE_ENV=production webpack --config config/webpack.config.js",
     "lint": "eslint .",
-    "serve": "serve dist -p 3001",
+    "serve": "serve dist -p 3000",
     "clean": "rm -rf dist",
     "start": "NODE_ENV=development webpack-dev-server --config config/webpack.config.js"
   },
