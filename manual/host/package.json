@@ -1,5 +1,5 @@
 {
-  "name": "host",
+  "name": "@manual/host",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,9 +20,11 @@
   },
   "scripts": {
     "start": "cross-env PORT=3000 react-scripts start",
+    "prebuild": "yarn run clean",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "clean": "rm -rf build",
+    "serve": "serve dist -p 3000",
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,6 +44,7 @@
   "devDependencies": {
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.1",
-    "cross-env": "^7.0.2"
+    "cross-env": "^7.0.2",
+    "serve": "^11.3.2"
   }
 }

@@ -27,7 +27,7 @@ module.exports = {
   mode: NODE_ENV !== undefined ? NODE_ENV : 'development',
   entry: [
     !isProductionBuild && '@webhotelier/webpack-fast-refresh/runtime.js',
-    resolveApp('src/index.tsx'),
+    resolveApp('src/index.ts'),
   ].filter(Boolean),
   output: {
     path: isProductionBuild ? resolveApp('dist') : undefined,
@@ -50,7 +50,7 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
-    port: 3000,
+    port: 3002,
     hot: true,
     hotOnly: true,
     headers: {
@@ -173,10 +173,11 @@ module.exports = {
   plugins: [
     // module federation
     new ModuleFederationPlugin({
-      name: 'host',
-      remotes: {
-        remoteA: 'remoteA@http://localhost:3001/remoteEntry.js',
-        remoteB: 'remoteB@http://localhost:3002/remoteEntry.js',
+      name: 'remoteB',
+      library: { type: 'var', name: 'remoteB' },
+      filename: 'remoteEntry.js',
+      exposes: {
+        './App': './src/components/App/App',
       },
       shared: ['react', 'react-dom'],
     }),

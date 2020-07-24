@@ -21,6 +21,7 @@ In order to circumvent this and allow parts of remotes to be loaded lazily, all 
 
 - Manual implementation to render/unmount remote apps
 - Reliance on (partially internal) webpack mechanisms which are prone to change between versions
+- `react` [doesn't work](6) with multiple versions of react loaded
 - `styled-components` [doesn't work](4) when the same version is loaded twice
 - `@material-ui/styles` [doesn't work](5) when several instances are on the same page
 - Forcing host and remotes to the same version of a library can only be done with webpack externals. This means we need adjust the build process configuration of the host _and_ every remote
@@ -29,10 +30,19 @@ In order to circumvent this and allow parts of remotes to be loaded lazily, all 
 
 #### 2. Module federation
 
-Module federation is a new feature in [webpack](3) v5, which allows
+Module federation is a new feature in [webpack](3) v5
+
+**Open questions**
+
+- How can we enforce remote OSS versions via Host?
+- Is it viable if we just use ContainerReferencePlugin and SharedPlugin in host and ContainerPlugin and SharedPlugin in remotes?
+- Where do i define singleton shared libraries? on host? remotes? both?
+- How do we distinguish between development/staging/production environments?
+- What's an easy way to deploy all build artifacts to the same folder, without hosting them on different hosts in production?
 
 [1]: https://martinfowler.com/articles/micro-frontends.html
 [2]: https://create-react-app.dev/
 [3]: https://webpack.js.org/
 [4]: https://styled-components.com/docs/faqs#why-am-i-getting-a-warning-about-several-instances-of-module-on-the-page
 [5]: https://material-ui.com/getting-started/faq/#i-have-several-instances-of-styles-on-the-page
+[6]: https://reactjs.org/warnings/invalid-hook-call-warning.html#duplicate-react
