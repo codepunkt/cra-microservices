@@ -9,7 +9,7 @@ type FederatedWrapperState = {
   hasError: boolean
 }
 
-export class FederatedWrapper extends React.Component<
+class FederatedWrapper extends React.Component<
   FederatedWrapperProps,
   FederatedWrapperState
 > {
@@ -38,3 +38,5 @@ export class FederatedWrapper extends React.Component<
     )
   }
 }
+
+export default FederatedWrapper

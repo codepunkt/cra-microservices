@@ -1,5 +1,7 @@
 import React from 'react'
 
-export const App: React.FC = () => {
+const App: React.FC = () => {
   return <>Remote B</>
 }
+
+export default App

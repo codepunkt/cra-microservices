@@ -53,6 +53,7 @@ module.exports = {
     port: 3000,
     hot: true,
     hotOnly: true,
+    historyApiFallback: true,
     headers: {
       'X-Custom-Foo': 'bar',
     },
