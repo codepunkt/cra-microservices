@@ -31,7 +31,7 @@ module.exports = {
   ].filter(Boolean),
   output: {
     path: isProductionBuild ? resolveApp('dist') : undefined,
-    publicPath: '/',
+    publicPath: 'http://localhost:3001/',
     filename: isProductionBuild
       ? 'static/js/[name].[contenthash:8].js'
       : 'static/js/bundle.js',
