@@ -9,6 +9,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const WebpackLicensePlugin = require('webpack-license-plugin')
 const ReactRefreshPlugin = require('@webhotelier/webpack-fast-refresh')
 const { ModuleFederationPlugin } = require('webpack').container
+const ModuleFederationDashboardPlugin = require('@module-federation/dashboard-plugin')
 
 // TODO:
 //    set up with browserlist
@@ -178,12 +179,21 @@ module.exports = {
       library: { type: 'var', name: 'remoteB' },
       filename: 'remoteEntry.js',
       exposes: {
-        './App': './src/components/App/App',
+        './Content': './src/components/Content/Content',
+      },
+      remotes: {
+        host: 'host@http://localhost:3000/remoteEntry.js',
       },
       shared: {
         react: { singleton: true },
         'react-router-dom': { singleton: true },
+        '@material-ui/styles': { singleton: true },
       },
+    }),
+    new ModuleFederationDashboardPlugin({
+      filename: 'dashboard.json',
+      dashboardURL: 'http://localhost:3005/api/update',
+      remote: 'http://localhost:3002/remoteEntry.js',
     }),
     // cleans output folder for production builds (which are written to disk)
     isProductionBuild && new CleanWebpackPlugin(),

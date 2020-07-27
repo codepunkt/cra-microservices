@@ -1,17 +1,15 @@
 import React from 'react'
-import { BasePathProvider } from '../../context/BasePathContext'
-import RouteDefinitions from '../RouteDefinitions/RouteDefinitions'
+import Content from '../Content/Content'
 
-type AppProps = {
-  basePath: string
-}
+const Frame = React.lazy(() => import('host/Frame'))
 
-const App: React.FC<AppProps> = ({ basePath }) => {
+const App: React.FC = () => {
   return (
-    <BasePathProvider value={basePath}>
-      <div>Remote B</div>
-      <RouteDefinitions />
-    </BasePathProvider>
+    <React.Suspense fallback={'loading frame...'}>
+      <Frame>
+        <Content />
+      </Frame>
+    </React.Suspense>
   )
 }
 

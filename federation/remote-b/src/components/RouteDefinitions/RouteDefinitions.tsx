@@ -8,6 +8,8 @@ const List = React.lazy(() => import('../List/List'))
 const RouteDefinitions: React.FC = () => {
   const basePath = useBasePath()
 
+  console.log(basePath)
+
   return (
     <Switch>
       <Suspense fallback="Loading...">

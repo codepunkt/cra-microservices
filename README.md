@@ -35,7 +35,6 @@ Module federation is a new feature in [webpack](3) v5
 **Open questions**
 
 - How can we enforce remote OSS versions via Host?
-- Is it viable if we just use ContainerReferencePlugin and SharedPlugin in host and ContainerPlugin and SharedPlugin in remotes?
 - Where do i define singleton shared libraries? on host? remotes? both?
 - How do we distinguish between development/staging/production environments?
 - What's an easy way to deploy all build artifacts to the same folder, without hosting them on different hosts in production?

@@ -1,33 +1,15 @@
 import React from 'react'
-import styled from 'styled-components'
-import Button from '@material-ui/core/Button'
-import { ThemeProvider } from '@material-ui/core'
-import { createMuiTheme } from '@material-ui/core/styles'
+import Content from '../Content/Content'
 
-const Headline = styled.h2`
-  font-weight: 500;
-`
+const Frame = React.lazy(() => import('host/Frame'))
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#ff69b4',
-    },
-  },
-})
-
-type AppProps = {
-  basePath: string
-}
-
-const App: React.FC<AppProps> = () => {
+const App: React.FC = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Headline>Remote A</Headline>
-      <Button variant="contained" color="primary">
-        pink remote button
-      </Button>
-    </ThemeProvider>
+    <React.Suspense fallback={'loading frame...'}>
+      <Frame>
+        <Content />
+      </Frame>
+    </React.Suspense>
   )
 }
 
