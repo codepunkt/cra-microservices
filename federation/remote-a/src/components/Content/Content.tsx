@@ -25,7 +25,7 @@ const Content: React.FC<ContentProps> = ({ basePath = '' }) => {
     <ThemeProvider theme={theme}>
       <Headline>Remote A</Headline>
       <Button variant="contained" color="primary">
-        pink remote button
+        pink remote!!! button
       </Button>
     </ThemeProvider>
   )

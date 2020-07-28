@@ -2,8 +2,15 @@ import React from 'react'
 import FederatedWrapper from '../FederatedWrapper/FederatedWrapper'
 import { ThemeProvider } from '@material-ui/core'
 import { createMuiTheme } from '@material-ui/core/styles'
-import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, NavLink, Route, Switch } from 'react-router-dom'
 import { NavigationConfig } from '../../types'
+import styled from 'styled-components'
+
+const MenuLink = styled(NavLink)`
+  &.active {
+    color: red;
+  }
+`
 
 const theme = createMuiTheme({
   palette: {
@@ -15,6 +22,9 @@ const theme = createMuiTheme({
 
 const Frame: React.FC = ({ children }) => {
   const [routes, setRoutes] = React.useState<NavigationConfig['routes']>([])
+  const [menuEntries, setMenuEntries] = React.useState<
+    NavigationConfig['menuEntries']
+  >([])
 
   React.useEffect(() => {
     const loadNavigationConfigurations = async () => {
@@ -24,10 +34,17 @@ const Frame: React.FC = ({ children }) => {
         import('remoteC/navigationConfig'),
       ])
 
+      const menuEntries: NavigationConfig['menuEntries'] = []
       const routes: NavigationConfig['routes'] = []
 
       results.forEach((result) => {
         if (result.status === 'fulfilled') {
+          menuEntries.push(
+            ...result.value.default.menuEntries.map((menuEntry) => ({
+              ...menuEntry,
+              path: `${result.value.default.pathPrefix}${menuEntry.path}`,
+            }))
+          )
           routes.push(
             ...result.value.default.routes.map((route) => ({
               ...route,
@@ -40,6 +57,7 @@ const Frame: React.FC = ({ children }) => {
       })
 
       setRoutes(routes)
+      setMenuEntries(menuEntries)
     }
     loadNavigationConfigurations()
   }, [])
@@ -48,19 +66,12 @@ const Frame: React.FC = ({ children }) => {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <ul>
-          <li>
-            <Link to="/a">Remote A</Link>
-          </li>
-          <li>
-            <Link to="/b">Remote B</Link>
-          </li>
+          {menuEntries.map((menuEntry) => (
+            <li key={menuEntry.path}>
+              <MenuLink to={menuEntry.path}>{menuEntry.text}</MenuLink>
+            </li>
+          ))}
         </ul>
-
-        <div>
-          <div>before</div>
-          {JSON.stringify(routes.length)}
-          <div>after</div>
-        </div>
         <Switch>
           {routes.map((route) => (
             <Route exact key={route.path} path={route.path}>
@@ -72,8 +83,8 @@ const Frame: React.FC = ({ children }) => {
               </FederatedWrapper>
             </Route>
           ))}
+          <Route>not found :(</Route>
         </Switch>
-        <main>{children}</main>
       </BrowserRouter>
     </ThemeProvider>
   )
