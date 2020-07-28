@@ -2,7 +2,7 @@ import React from 'react'
 import FederatedWrapper from '../FederatedWrapper/FederatedWrapper'
 import { ThemeProvider } from '@material-ui/core'
 import { createMuiTheme } from '@material-ui/core/styles'
-import { BrowserRouter, Link, Redirect, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Switch } from 'react-router-dom'
 import { NavigationConfig } from '../../types'
 
 const theme = createMuiTheme({
@@ -18,21 +18,28 @@ const Frame: React.FC = ({ children }) => {
 
   React.useEffect(() => {
     const loadNavigationConfigurations = async () => {
-      const [configA, configB] = (
-        await Promise.all([
-          import('remoteA/navigationConfig'),
-          import('remoteB/navigationConfig'),
-        ])
-      )
-        .map((module) => module.default)
-        .map((config) => ({
-          ...config,
-          routes: config.routes.map((route) => ({
-            ...route,
-            path: `${config.pathPrefix}${route.path}`,
-          })),
-        }))
-      setRoutes([...configA.routes, ...configB.routes])
+      const results = await Promise.allSettled([
+        import('remoteA/navigationConfig'),
+        import('remoteB/navigationConfig'),
+        import('remoteC/navigationConfig'),
+      ])
+
+      const routes: NavigationConfig['routes'] = []
+
+      results.forEach((result) => {
+        if (result.status === 'fulfilled') {
+          routes.push(
+            ...result.value.default.routes.map((route) => ({
+              ...route,
+              path: `${result.value.default.pathPrefix}${route.path}`,
+            }))
+          )
+        } else {
+          console.error(result.reason)
+        }
+      })
+
+      setRoutes(routes)
     }
     loadNavigationConfigurations()
   }, [])

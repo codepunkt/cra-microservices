@@ -7,3 +7,8 @@ declare module 'remoteB/navigationConfig' {
   const navigationConfig: import('./types').NavigationConfig
   export default navigationConfig
 }
+
+declare module 'remoteC/navigationConfig' {
+  const navigationConfig: import('./types').NavigationConfig
+  export default navigationConfig
+}
