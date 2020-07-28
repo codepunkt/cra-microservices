@@ -176,10 +176,9 @@ module.exports = {
     // module federation
     new ModuleFederationPlugin({
       name: 'remoteA',
-      library: { type: 'var', name: 'remoteA' },
       filename: 'remoteEntry.js',
       exposes: {
-        './Content': './src/components/Content/Content',
+        './navigationConfig': './src/navigationConfig',
       },
       remotes: {
         host: 'host@http://localhost:3000/remoteEntry.js',

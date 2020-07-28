@@ -1,11 +1,9 @@
-/// <reference types="react" />
-
-declare module 'remoteA/Content' {
-  const Content: React.FC<{ basePath: string }>
-  export default Content
+declare module 'remoteA/navigationConfig' {
+  const navigationConfig: import('./types').NavigationConfig
+  export default navigationConfig
 }
 
-declare module 'remoteB/Content' {
-  const Content: React.FC<{ basePath: string }>
-  export default Content
+declare module 'remoteB/navigationConfig' {
+  const navigationConfig: import('./types').NavigationConfig
+  export default navigationConfig
 }

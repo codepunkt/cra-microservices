@@ -2,7 +2,7 @@ import React from 'react'
 
 type FederatedWrapperProps = {
   error: React.ReactNode
-  delayed: React.ReactNode
+  fallback: React.ReactNode
 }
 
 type FederatedWrapperState = {
@@ -32,7 +32,7 @@ class FederatedWrapper extends React.Component<
     }
 
     return (
-      <React.Suspense fallback={this.props.delayed || <div />}>
+      <React.Suspense fallback={this.props.fallback || ''}>
         {this.props.children}
       </React.Suspense>
     )

@@ -176,7 +176,6 @@ module.exports = {
     // module federation
     new ModuleFederationPlugin({
       name: 'host',
-      library: { type: 'var', name: 'host' },
       filename: 'remoteEntry.js',
       exposes: {
         './Frame': './src/components/Frame/Frame',
