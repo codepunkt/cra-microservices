@@ -21,6 +21,9 @@ const isProductionBuildWithProfiling =
 
 // resolve paths relative to where the webpack process is invoked
 // (usually, this is the project root)
+
+// TODO: use zack's htmlWebpackPlugin from github, remove fast-refresh,
+// try again
 const resolveApp = (...relativePaths) =>
   path.resolve(fs.realpathSync(process.cwd()), ...relativePaths)
 
@@ -186,14 +189,15 @@ module.exports = {
       shared: {
         react: { singleton: true },
         'react-router-dom': { singleton: true },
+        'styled-components': { singleton: true },
         '@material-ui/styles': { singleton: true },
       },
     }),
-    new ModuleFederationDashboardPlugin({
-      filename: 'dashboard.json',
-      dashboardURL: 'http://localhost:3005/api/update',
-      remote: 'http://localhost:3001/remoteEntry.js',
-    }),
+    // new ModuleFederationDashboardPlugin({
+    //   filename: 'dashboard.json',
+    //   dashboardURL: 'http://localhost:3005/api/update',
+    //   remote: 'http://localhost:3001/remoteEntry.js',
+    // }),
     // cleans output folder for production builds (which are written to disk)
     isProductionBuild && new CleanWebpackPlugin(),
     // generates an `index.html` file with <script> tags injected

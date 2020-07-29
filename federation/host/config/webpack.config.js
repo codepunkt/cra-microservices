@@ -187,6 +187,7 @@ module.exports = {
       shared: {
         react: { singleton: true },
         'react-router-dom': { singleton: true },
+        'styled-components': { singleton: true },
         '@material-ui/styles': { singleton: true },
       },
     }),

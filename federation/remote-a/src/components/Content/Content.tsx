@@ -16,16 +16,13 @@ const theme = createMuiTheme({
   },
 })
 
-type ContentProps = {
-  basePath?: string
-}
-
-const Content: React.FC<ContentProps> = ({ basePath = '' }) => {
+// TODO: open issue for hot reloading
+const Content: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Headline>Remote A</Headline>
       <Button variant="contained" color="primary">
-        pink remote!!! button
+        pink remote button :)!
       </Button>
     </ThemeProvider>
   )

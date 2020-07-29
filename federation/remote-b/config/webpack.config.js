@@ -186,14 +186,15 @@ module.exports = {
       shared: {
         react: { singleton: true },
         'react-router-dom': { singleton: true },
+        'styled-components': { singleton: true },
         '@material-ui/styles': { singleton: true },
       },
     }),
-    new ModuleFederationDashboardPlugin({
-      filename: 'dashboard.json',
-      dashboardURL: 'http://localhost:3005/api/update',
-      remote: 'http://localhost:3002/remoteEntry.js',
-    }),
+    // new ModuleFederationDashboardPlugin({
+    //   filename: 'dashboard.json',
+    //   dashboardURL: 'http://localhost:3005/api/update',
+    //   remote: 'http://localhost:3002/remoteEntry.js',
+    // }),
     // cleans output folder for production builds (which are written to disk)
     isProductionBuild && new CleanWebpackPlugin(),
     // generates an `index.html` file with <script> tags injected
