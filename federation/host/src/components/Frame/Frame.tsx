@@ -21,7 +21,7 @@ const Frame: React.FC = ({ children }) => {
       const results = await Promise.allSettled([
         import('remoteA/navigationConfig'),
         import('remoteB/navigationConfig'),
-        import('remoteC/navigationConfig'),
+        // import('remoteC/navigationConfig'),
       ])
 
       const menuEntries: NavigationConfig['menuEntries'] = []

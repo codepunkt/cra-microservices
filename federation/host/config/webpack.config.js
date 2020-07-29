@@ -10,6 +10,7 @@ const WebpackLicensePlugin = require('webpack-license-plugin')
 const ReactRefreshPlugin = require('@webhotelier/webpack-fast-refresh')
 const { ModuleFederationPlugin } = require('webpack').container
 const ModuleFederationDashboardPlugin = require('@module-federation/dashboard-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 // TODO:
 //    set up with browserlist
@@ -181,6 +182,10 @@ module.exports = {
         './Frame': './src/components/Frame/Frame',
       },
       remotes: {
+        // TODO: check external and promise syntax
+        // remoteA: {
+        //   external: 'promise new Promise((resolve)=>resolve(`http://localhost:3001/remoteEntry.js`))',
+        // },
         remoteA: 'remoteA@http://localhost:3001/remoteEntry.js',
         remoteB: 'remoteB@http://localhost:3002/remoteEntry.js',
       },
@@ -198,9 +203,21 @@ module.exports = {
     }),
     // cleans output folder for production builds (which are written to disk)
     isProductionBuild && new CleanWebpackPlugin(),
+    // copy static files
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'public',
+          globOptions: {
+            dot: true,
+            ignore: ['**/index.html'],
+          },
+        },
+      ],
+    }),
     // generates an `index.html` file with <script> tags injected
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './public/index.html',
       minify: isProductionBuild
         ? {
             removeComments: true,

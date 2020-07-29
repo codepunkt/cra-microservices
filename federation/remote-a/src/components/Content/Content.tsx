@@ -16,7 +16,6 @@ const theme = createMuiTheme({
   },
 })
 
-// TODO: open issue for hot reloading
 const Content: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
