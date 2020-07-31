@@ -156,7 +156,7 @@ module.exports = {
         extractComments: false,
         terserOptions: {
           comments: false,
-          toplevel: true,
+          toplevel: false,
           parse: { ecma: 2020 },
           keep_classnames: isProductionBuildWithProfiling,
           keep_fnames: isProductionBuildWithProfiling,
@@ -183,6 +183,7 @@ module.exports = {
       },
       remotes: {
         host: 'host@http://localhost:3000/remoteEntry.js',
+        remoteA: 'remoteA@http://localhost:3001/remoteEntry.js',
       },
       shared: {
         react: { singleton: true },

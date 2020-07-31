@@ -1,14 +1,14 @@
 // import rofl from 'src/rofl'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './components/App/App'
-import { BrowserRouter } from 'react-router-dom'
+
+const App = React.lazy(() => import('host/App'))
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <React.Suspense fallback={'loading app...'}>
       <App />
-    </BrowserRouter>
+    </React.Suspense>
   </React.StrictMode>,
   document.querySelector('#app')
 )
