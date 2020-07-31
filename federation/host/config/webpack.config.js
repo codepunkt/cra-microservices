@@ -25,6 +25,8 @@ const isProductionBuildWithProfiling =
 const resolveApp = (...relativePaths) =>
   path.resolve(fs.realpathSync(process.cwd()), ...relativePaths)
 
+// TODO: configure remoteHosts as an entrypoint
+// TODO: can we read the promise code from webpack?
 module.exports = (env) => {
   const getRemoteHost = (key) => {
     // if remote host is defined via environment variable, use it
@@ -37,7 +39,7 @@ module.exports = (env) => {
     }
 
     // if not, load remote host from global variable that is injected
-    // at runtime via `remoteEntries.js` config file
+    // at runtime via `remoteHosts.js` config file
     return `promise new Promise((resolve, reject) => {
       debugger;
       if (typeof ${key} !== "undefined") return resolve();
@@ -203,15 +205,11 @@ module.exports = (env) => {
         name: 'host',
         filename: 'remoteEntry.js',
         exposes: {
-          './Frame': './src/components/Frame/Frame',
+          './App': './src/components/App/App',
         },
-        // remotes: {
-        //   remoteA: getRemoteHost('remoteA'),
-        //   remoteB: getRemoteHost('remoteB'),
-        // },
         remotes: {
-          remoteA: 'remoteA@http://localhost:3001/remoteEntry.js',
-          remoteB: 'remoteB@http://localhost:3002/remoteEntry.js',
+          remoteA: getRemoteHost('remoteA'),
+          remoteB: getRemoteHost('remoteB'),
         },
         shared: {
           react: { singleton: true },

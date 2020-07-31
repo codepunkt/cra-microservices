@@ -178,12 +178,12 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'remoteB',
       filename: 'remoteEntry.js',
-      // library: { type: 'var', name: 'remoteB' },
       exposes: {
         './navigationConfig': './src/navigationConfig',
       },
       remotes: {
         host: 'host@http://localhost:3000/remoteEntry.js',
+        remoteA: 'remoteA@http://localhost:3001/remoteEntry.js',
       },
       shared: {
         react: { singleton: true },

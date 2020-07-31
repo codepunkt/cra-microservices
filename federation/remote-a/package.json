@@ -6,7 +6,7 @@
     "prebuild": "yarn run clean",
     "build": "NODE_ENV=production webpack --config config/webpack.config.js",
     "lint": "eslint .",
-    "serve": "serve dist -p 3001",
+    "serve": "serve dist -s -p 3001",
     "clean": "rm -rf dist",
     "start": "NODE_ENV=development webpack-dev-server --config config/webpack.config.js"
   },
@@ -43,7 +43,7 @@
     "eslint-plugin-react-hooks": "^4.0.6",
     "file-loader": "^6.0.0",
     "fork-ts-checker-webpack-plugin": "^5.0.7",
-    "html-webpack-plugin": "git://github.com/ScriptedAlchemy/html-webpack-plugin#master",
+    "html-webpack-plugin": "^4.3.0",
     "prettier": "^2.0.5",
     "react-dev-utils": "^10.2.1",
     "react-refresh": "^0.8.3",
