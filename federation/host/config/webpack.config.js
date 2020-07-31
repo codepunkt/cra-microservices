@@ -180,7 +180,7 @@ module.exports = (env) => {
           extractComments: false,
           terserOptions: {
             comments: false,
-            toplevel: true,
+            toplevel: false,
             parse: { ecma: 2020 },
             keep_classnames: isProductionBuildWithProfiling,
             keep_fnames: isProductionBuildWithProfiling,
@@ -205,9 +205,13 @@ module.exports = (env) => {
         exposes: {
           './Frame': './src/components/Frame/Frame',
         },
+        // remotes: {
+        //   remoteA: getRemoteHost('remoteA'),
+        //   remoteB: getRemoteHost('remoteB'),
+        // },
         remotes: {
-          remoteA: getRemoteHost('remoteA'),
-          remoteB: getRemoteHost('remoteB'),
+          remoteA: 'remoteA@http://localhost:3001/remoteEntry.js',
+          remoteB: 'remoteB@http://localhost:3002/remoteEntry.js',
         },
         shared: {
           react: { singleton: true },

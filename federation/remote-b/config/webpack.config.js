@@ -156,7 +156,7 @@ module.exports = {
         extractComments: false,
         terserOptions: {
           comments: false,
-          toplevel: true,
+          toplevel: false,
           parse: { ecma: 2020 },
           keep_classnames: isProductionBuildWithProfiling,
           keep_fnames: isProductionBuildWithProfiling,
@@ -178,6 +178,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'remoteB',
       filename: 'remoteEntry.js',
+      // library: { type: 'var', name: 'remoteB' },
       exposes: {
         './navigationConfig': './src/navigationConfig',
       },
