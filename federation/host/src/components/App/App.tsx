@@ -32,8 +32,6 @@ const App: React.FC = ({ children }) => {
       const menuEntries: NavigationConfig['menuEntries'] = []
       const routes: NavigationConfig['routes'] = []
 
-      console.log(results)
-
       results.forEach((result) => {
         if (result.status === 'fulfilled') {
           menuEntries.push(

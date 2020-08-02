@@ -16,6 +16,14 @@
     "serve-host": "cd host && yarn run serve",
     "serve-remote-a": "cd remote-a && yarn run serve",
     "serve-remote-b": "cd remote-b && yarn run serve",
-    "serve": "../node_modules/.bin/concurrently yarn:serve-*"
+    "serve": "../node_modules/.bin/concurrently yarn:serve-*",
+    "docker-build-host": "cd host && yarn run docker-build",
+    "docker-build-remote-a": "cd remote-a && yarn run docker-build",
+    "docker-build-remote-b": "cd remote-b && yarn run docker-build",
+    "docker-build": "../node_modules/.bin/concurrently yarn:docker-build-*",
+    "docker-run-host": "cd host && yarn run docker-run",
+    "docker-run-remote-a": "cd remote-a && yarn run docker-run",
+    "docker-run-remote-b": "cd remote-b && yarn run docker-run",
+    "docker-run": "../node_modules/.bin/concurrently yarn:docker-run-*"
   }
 }

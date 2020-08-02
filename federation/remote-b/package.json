@@ -4,11 +4,13 @@
   "version": "1.0.0",
   "scripts": {
     "prebuild": "yarn run clean",
-    "build": "NODE_ENV=production webpack --config config/webpack.config.js",
+    "build": "NODE_ENV=production webpack --config internal/webpack.config.js",
     "lint": "eslint .",
     "serve": "serve dist -s -p 3002",
     "clean": "rm -rf dist",
-    "start": "NODE_ENV=development webpack-dev-server --config config/webpack.config.js"
+    "docker-build": "docker build --no-cache --rm -f internal/Dockerfile -t codepunkt/federation/remote-b .",
+    "docker-run": "docker run --rm -d -p 3102:80/tcp --name federation-remote-b codepunkt/federation/remote-b:latest",
+    "start": "NODE_ENV=development webpack-dev-server --config internal/webpack.config.js"
   },
   "dependencies": {
     "react": "^16.13.1",

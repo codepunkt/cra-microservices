@@ -25,8 +25,6 @@ const isProductionBuildWithProfiling =
 const resolveApp = (...relativePaths) =>
   path.resolve(fs.realpathSync(process.cwd()), ...relativePaths)
 
-// TODO: configure remoteHosts as an entrypoint
-// TODO: can we read the promise code from webpack?
 module.exports = (env) => {
   const getRemoteHost = (key) => {
     // if remote host is defined via environment variable, use it
@@ -41,7 +39,6 @@ module.exports = (env) => {
     // if not, load remote host from global variable that is injected
     // at runtime via `remoteHosts.js` config file
     return `promise new Promise((resolve, reject) => {
-      debugger;
       if (typeof ${key} !== "undefined") return resolve();
       if (typeof window.__webpack_federation_remotes__ === undefined) return reject(new Error("remote not defined"))
       __webpack_require__.l(__webpack_federation_remotes__['${key}'] + "/remoteEntry.js", (event) => {
@@ -53,13 +50,16 @@ module.exports = (env) => {
 
   return {
     mode: NODE_ENV !== undefined ? NODE_ENV : 'development',
-    entry: [
-      !isProductionBuild && '@webhotelier/webpack-fast-refresh/runtime.js',
-      resolveApp('src/index.ts'),
-    ].filter(Boolean),
+    entry: {
+      remoteB: resolveApp('src/publicPath.ts'),
+      main: [
+        !isProductionBuild && '@webhotelier/webpack-fast-refresh/runtime.js',
+        resolveApp('src/index.ts'),
+      ].filter(Boolean),
+    },
     output: {
       path: isProductionBuild ? resolveApp('dist') : undefined,
-      publicPath: 'http://localhost:3000/',
+      publicPath: '/',
       filename: isProductionBuild
         ? 'static/js/[name].[contenthash:8].js'
         : 'static/js/bundle.js',
@@ -78,7 +78,7 @@ module.exports = (env) => {
     devServer: {
       contentBase: path.join(__dirname, 'dist'),
       compress: true,
-      port: 3000,
+      port: 3002,
       hot: true,
       hotOnly: true,
       historyApiFallback: true,
@@ -202,14 +202,14 @@ module.exports = (env) => {
     plugins: [
       // module federation
       new ModuleFederationPlugin({
-        name: 'host',
+        name: 'remoteB',
         filename: 'remoteEntry.js',
         exposes: {
-          './App': './src/components/App/App',
+          './navigationConfig': './src/navigationConfig',
         },
         remotes: {
+          host: getRemoteHost('host'),
           remoteA: getRemoteHost('remoteA'),
-          remoteB: getRemoteHost('remoteB'),
         },
         shared: {
           react: { singleton: true },
@@ -218,11 +218,11 @@ module.exports = (env) => {
           '@material-ui/styles': { singleton: true },
         },
       }),
-      new ModuleFederationDashboardPlugin({
-        filename: 'dashboard.json',
-        dashboardURL: 'http://localhost:3005/api/update',
-        remote: 'http://localhost:3000/remoteEntry.js',
-      }),
+      // new ModuleFederationDashboardPlugin({
+      //   filename: 'dashboard.json',
+      //   dashboardURL: 'http://localhost:3005/api/update',
+      //   remote: 'http://localhost:3002/remoteEntry.js',
+      // }),
       // cleans output folder for production builds (which are written to disk)
       isProductionBuild && new CleanWebpackPlugin(),
       // copy static files
